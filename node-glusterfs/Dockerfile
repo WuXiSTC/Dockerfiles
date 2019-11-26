@@ -1,8 +1,9 @@
-FROM node:buster
+FROM gluster:glusterfs-client
 
-RUN wget -O - https://download.gluster.org/pub/gluster/glusterfs/7/rsa.pub | apt-key add - && \
-    echo deb [arch=amd64] https://download.gluster.org/pub/gluster/glusterfs/7/LATEST/Debian/buster/amd64/apt buster main > /etc/apt/sources.list.d/gluster.list && \
-    apt-get update && \
-    apt-get install glusterfs-client
+ENV VERSION=v12.13.1
+ENV DISTRO=linux-x64
 
-ADD ./ /app
+RUN wget https://nodejs.org/dist/${VERSION}/node-${VERSION}-${DISTRO}.tar.gz -O node.tar.gz && \
+    mkdir -p /usr/local/lib/nodejs && \
+    tar -xzvf node.tar.gz -C /usr/local/lib/nodejs && \
+    export PATH=/usr/local/lib/nodejs/node-${VERSION}-${DISTRO}/bin:$PATH
