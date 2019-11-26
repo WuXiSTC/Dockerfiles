@@ -1,4 +1,4 @@
-FROM gluster:glusterfs-client
+FROM gluster/glusterfs-client
 
 ENV VERSION=v12.13.1
 ENV DISTRO=linux-x64
