@@ -10,7 +10,7 @@ The server image for GlusterFS.
 
 ## 使用方法
 
-本镜像使用一个start.sh脚本将GlusterFS服务器的创建简化为了几个变量的配置：
+本镜像使用一个`start.sh`脚本将GlusterFS服务器的创建简化为了几个变量的配置：
 
 * `-h`或`--help`：显示帮助
 * `-s`或`--start`：自定义的服务器启动脚本路径，默认值为`/usr/sbin/init`
@@ -28,3 +28,11 @@ The server image for GlusterFS.
 * `-t`或`--transport`：要创建的卷通信方法
 * `-s`或`--server`：要创建虚拟卷的服务器地址和目录，可以有多个，但是其数量必须与冗余卷、条带卷、纠错码卷三者数量之和相等
 * `-f`或`--force`：是否用force创建
+
+### 启动
+
+```sh
+docker run -v [挂载磁盘] -p [端口映射] yindaheng98/glusterfs-server start.sh [命令行参数]
+```
+
+具体磁盘挂载和端口映射规则见[官方镜像库](https://hub.docker.com/r/gluster/glusterfs-client)。
