@@ -1,5 +1,7 @@
 #! /bin/bash
 
+#/usr/sbin/init
+
 help() {
     echo "
 脚本将GlusterFS服务器的创建简化为了几个变量的配置：
@@ -51,7 +53,6 @@ create_volume() {
     for VOLUME_SERVER in ${VOLUME_SERVERS[*]}; do
         cmd="${cmd} ${VOLUME_SERVER}"
     done
-    #start="gluster volume start ${VOLUME_PARS[0]}"
     echo "$cmd"
     return 0
 }
@@ -133,22 +134,22 @@ while true; do
 done
 CREATE_VOLUMES[${#CREATE_VOLUMES[*]}]=$(create_volume $VOLUME_PARS $VOLUME_SERVERS)
 
+echo $START_SCRIPT
+
 echo "Waiting for other server to start."
 for i in '9876543210'; do
-    echo $i
+    echo $if
     sleep 1s
 done
 
-RUN=$START_SCRIPT
-
 for i in "${!PROBE_SERVERS[@]}"; do
     echo ${PROBE_SERVERS[$i]}
-    RUN=$RUN && ${PROBE_SERVERS[$i]}
+    ${PROBE_SERVERS[$i]}
 done
 
 for i in "${!CREATE_VOLUMES[@]}"; do
     echo ${CREATE_VOLUMES[$i]}
-    RUN=$RUN && ${CREATE_VOLUMES[$i]}
+    ${CREATE_VOLUMES[$i]}
 done
 
-exec $RUN
+exit 0

@@ -9,3 +9,5 @@ RUN wget https://nodejs.org/dist/${VERSION}/node-${VERSION}-${DISTRO}.tar.gz -O 
     rm node.tar.gz
 
 ENV PATH=/usr/local/lib/nodejs/node-${VERSION}-${DISTRO}/bin:${PATH}
+
+ADD ./start.sh ./
