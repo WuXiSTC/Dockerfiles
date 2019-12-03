@@ -14,7 +14,6 @@ RUN apt-get update && \
 FROM debian:buster
 
 ENV PIKA_ROOT /pika
-ENV PIKA_FILE /pika.tar.bz2
 
 COPY --from=0 /pika ${PIKA_ROOT}
 
