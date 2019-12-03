@@ -14,11 +14,15 @@ RUN apt-get update && \
 
 FROM debian:buster
 
-ENV PIKA_ROOT /usr/local/pika
+ENV PIKA_ROOT /opt/pika
 
 COPY --from=0 /pika/output ${PIKA_ROOT}
 
 ENV PATH ${PIKA_ROOT}/bin:${PATH}
+
+RUN apt-get update && \
+    apt-get install -y rsync && \
+    apt-get clean
 
 WORKDIR /pika
 
