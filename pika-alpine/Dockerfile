@@ -1,21 +1,10 @@
-FROM debian:buster
+FROM alpine
 
 ENV PIKA_VERSION v3.2.7
 
-ENV PIKA_FILE /pika.tar.bz2
-ENV PIKA_URL https://github.com/Qihoo360/pika/releases/download/${PIKA_VERSION}/pika-linux-x86_64-${PIKA_VERSION}.tar.bz2
-
-RUN apt-get update && \
-    apt-get install -y wget bzip2 && \
-    wget -O ${PIKA_FILE} ${PIKA_URL} && \
-    mkdir /pika && \
-    tar -jxvf ${PIKA_FILE} -C /pika
-
-
-FROM debian:buster
-
-ENV PIKA_ROOT /pika
-
-COPY --from=0 /pika ${PIKA_ROOT}
-
-ENV PATH ${PIKA_ROOT}/output/bin:${PATH}
+RUN apk add git make snappy-dev protobuf-dev gcc g++ && \
+    apk add gflags-dev --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community && \
+    apk add glog-dev --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing && \
+    git clone --branch ${PIKA_VERSION} https://github.com/Qihoo360/pika && \
+    cd pika && \
+    make
