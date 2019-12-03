@@ -1,9 +1,17 @@
 FROM alpine
 
+ENV PIKA_VERSION v3.2.7
+
+RUN apk add git && \
+    git clone --branch ${PIKA_VERSION} https://github.com/Qihoo360/pika && \
+    cd pika && \
+    make
+
+FROM alpine
+
 ENV PIKA_ROOT /pika
-ENV PIKA_FILE pika.tar.bz2
-ENV PIKA_URL https://github.com/Qihoo360/pika/releases/download/v3.2.6/pika-linux-x86_64-v3.2.6.tar.bz2
-RUN wget -O ${PIKA_FILE} ${PIKA_URL} && \
-    mkdir ${PIKA_ROOT} && \
-    tar -jxvf ${PIKA_FILE} -C ${PIKA_ROOT} && \
-    rm -f ${PIKA_FILE}
+COPY --from=0 /pika/output/bin/pika ${PIKA_ROOT}
+COPY --from=0 /pika/conf/pika.conf /
+ENV PATH ${PIKA_ROOT}:${PATH}
+
+CMD [ "pika","-c","/pika.conf" ]
