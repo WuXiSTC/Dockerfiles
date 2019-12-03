@@ -6,7 +6,7 @@ ENV PIKA_FILE /pika.tar.bz2
 ENV PIKA_URL https://github.com/Qihoo360/pika/releases/download/${PIKA_VERSION}/pika-linux-x86_64-${PIKA_VERSION}.tar.bz2
 
 RUN apt-get update && \
-    apt-get install -y wget && \
+    apt-get install -y wget bzip2 && \
     wget -O ${PIKA_FILE} ${PIKA_URL} && \
     tar -jxvf ${PIKA_FILE} -C /pika
 
