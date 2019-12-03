@@ -14,8 +14,16 @@ RUN apt-get update && \
 
 FROM debian:buster
 
-ENV PIKA_ROOT /pika
+ENV PIKA_ROOT /usr/local/pika
 
-COPY --from=0 /pika ${PIKA_ROOT}
+COPY --from=0 /pika/output ${PIKA_ROOT}
 
-ENV PATH ${PIKA_ROOT}/output/bin:${PATH}
+ENV PATH ${PIKA_ROOT}/bin:${PATH}
+
+WORKDIR /pika
+
+VOLUME [ "/pika" ]
+
+EXPOSE 9221
+
+CMD [ "pika","-c","${PIKA_ROOT}/conf/pika.conf" ]
