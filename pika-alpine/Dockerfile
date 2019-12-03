@@ -8,6 +8,7 @@ ENV PIKA_URL https://github.com/Qihoo360/pika/releases/download/${PIKA_VERSION}/
 RUN apt-get update && \
     apt-get install -y wget bzip2 && \
     wget -O ${PIKA_FILE} ${PIKA_URL} && \
+    mkdir /pika && \
     tar -jxvf ${PIKA_FILE} -C /pika
 
 
