@@ -9,5 +9,4 @@ RUN wget -O ${PIKA_FILE} ${PIKA_URL} && \
     mkdir ${PIKA_ROOT} && \
     tar -jxvf ${PIKA_FILE} -C ${PIKA_ROOT} && \
     rm -f ${PIKA_FILE}
-
 ENV PATH ${PIKA_ROOT}/output/bin:${PATH}
