@@ -7,16 +7,15 @@ ENV PIKA_URL https://github.com/Qihoo360/pika/releases/download/${PIKA_VERSION}/
 
 RUN apt-get update && \
     apt-get install -y wget && \
-    wget -O ${PIKA_FILE} ${PIKA_URL}
+    wget -O ${PIKA_FILE} ${PIKA_URL} && \
+    tar -jxvf ${PIKA_FILE} -C /pika
+
 
 FROM debian:buster
 
 ENV PIKA_ROOT /pika
 ENV PIKA_FILE /pika.tar.bz2
 
-COPY --from=0 ${PIKA_FILE} /
+COPY --from=0 /pika ${PIKA_ROOT}
 
-RUN mkdir ${PIKA_ROOT} && \
-    tar -jxvf ${PIKA_FILE} -C ${PIKA_ROOT} && \
-    rm -f ${PIKA_FILE}
 ENV PATH ${PIKA_ROOT}/output/bin:${PATH}
