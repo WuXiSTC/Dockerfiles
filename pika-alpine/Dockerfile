@@ -1,10 +1,9 @@
-FROM alpine
+FROM frolvlad/alpine-glibc
 
-ENV PIKA_VERSION v3.2.7
-
-RUN apk add git make snappy-dev protobuf-dev gcc g++ && \
-    apk add gflags-dev --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community && \
-    apk add glog-dev --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing && \
-    git clone --branch ${PIKA_VERSION} https://github.com/Qihoo360/pika && \
-    cd pika && \
-    make
+ENV PIKA_ROOT /pika
+ENV PIKA_FILE pika.tar.bz2
+ENV PIKA_URL https://github.com/Qihoo360/pika/releases/download/v3.2.6/pika-linux-x86_64-v3.2.6.tar.bz2
+RUN wget -O ${PIKA_FILE} ${PIKA_URL} && \
+    mkdir ${PIKA_ROOT} && \
+    tar -jxvf ${PIKA_FILE} -C ${PIKA_ROOT} && \
+    rm -f ${PIKA_FILE}
