@@ -11,7 +11,7 @@ RUN apk add libbz2 rsync && \
     tar -jxvf ${PIKA_FILE} -C ${PIKA_ROOT} && \
     rm -f ${PIKA_FILE} && \
     mv ${PIKA_ROOT}/output/* ${PIKA_ROOT} && \
-    rm -f ${PIKA_FILE}/output
+    rm -rf ${PIKA_FILE}/output
 
 ENV PATH ${PIKA_ROOT}/bin:${PATH}
 
