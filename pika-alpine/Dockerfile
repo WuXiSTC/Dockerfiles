@@ -9,13 +9,15 @@ RUN apk add libbz2 rsync && \
     wget -O ${PIKA_FILE} ${PIKA_URL} && \
     mkdir ${PIKA_ROOT} && \
     tar -jxvf ${PIKA_FILE} -C ${PIKA_ROOT} && \
-    rm -f ${PIKA_FILE}
+    rm -f ${PIKA_FILE} && \
+    mv ${PIKA_ROOT}/output/* ${PIKA_ROOT} && \
+    rm -f ${PIKA_FILE}/output
 
-ENV PATH ${PIKA_ROOT}/output/bin:${PATH}
+ENV PATH ${PIKA_ROOT}/bin:${PATH}
 
 WORKDIR /pika
 VOLUME [ "/pika" ]
 
 EXPOSE 9221
 
-CMD pika -c ${PIKA_ROOT}/output/conf/pika.conf
+CMD pika -c ${PIKA_ROOT}/conf/pika.conf
