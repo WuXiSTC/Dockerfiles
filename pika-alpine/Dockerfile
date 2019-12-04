@@ -17,7 +17,6 @@ ENV PATH ${PIKA_ROOT}/bin:${PATH}
 
 WORKDIR /pika
 VOLUME [ "/pika" ]
-
 EXPOSE 9221
 
 CMD pika -c ${PIKA_ROOT}/conf/pika.conf
